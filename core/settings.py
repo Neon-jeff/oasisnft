@@ -168,7 +168,8 @@ CSRF_COOKIE_SECURE=False
 SESSION_COOKIE_SECURE=False
 
 CSRF_TRUSTED_ORIGINS=[
-   "https://oasisnft-production.up.railway.app"
+   "https://oasisnft-production.up.railway.app",
+   "https://nelloarts.com"
 ]
 
 
