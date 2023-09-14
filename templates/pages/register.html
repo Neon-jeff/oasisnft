@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <section class=' py-20 flex   bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] opacity-90 from-fuchsia-900 via-black to-black items-center justify-center flex-col'>
+
+     <form
+    action=""
+    method="POST"
+    class="mx-auto border-2 border-white text-white p-8   lg:w-1/3 w-11/12  rounded-md flex flex-col gap-5"
+  >
+     <h1 class='text-white  text-2xl font-medium'>Create Account</h1>
+    {% csrf_token %}
+    <fieldset class="flex flex-col gap-1">
+      <label for="uname">Username</label>
+      <input
+        name="uname"
+        type="text"
+        placeholder="Enter username"
+        class="placeholder:text-[12px] text-black border-0 bg-white rounded-sm"
+        required
+      />
+    </fieldset>
+
+    <fieldset class="flex flex-col gap-1">
+      <label for="email">Email</label>
+      <input
+        name="email"
+        type="email"
+        placeholder="Enter email"
+        class="placeholder:text-[12px] text-black border-0 bg-white rounded-sm"
+        required
+      />
+    </fieldset>
+
+    <fieldset class="flex flex-col gap-1">
+      <label for="fname">Full Name</label>
+      <input
+        name="fname"
+        type="text"
+        placeholder="Enter fullname"
+        class="placeholder:text-[12px] text-black border-0 bg-white rounded-sm"
+        required
+      />
+    </fieldset>
+
+    <fieldset class="flex flex-col gap-1">
+      <label for="password">Password</label>
+      <input
+        name="password"
+        type="password"
+        placeholder="Enter password"
+        class="placeholder:text-[12px] text-black border-0 bg-white rounded-sm"
+        required
+      />
+    </fieldset>
+
+    <button type="submit" class="px-5 py-3 rounded-md bg-purple-500 text-white">
+      Create Account
+    </button>
+    <p class="lg:col-span-2 text-center lg:py-1">
+      By signing up, you agree to our
+      <a href="{%url 'terms'%}" class="text-fuchsia-500 underline"
+        >Privacy Policy</a
+      >
+    </p>
+    <p class="lg:col-span-2 text-center text-[.7rem]">
+      Already have an account?
+      <span class="text-fuchsia-500 font-meduim"
+        ><a href="{%url 'login'%}">Login</a></span
+      >
+    </p>
+  </form>
+  </section>
+
+{% endblock content %}

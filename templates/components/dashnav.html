@@ -1,0 +1,114 @@
+{%load static%}
+<nav
+  class="flex justify-between px-5 py-10 text-white bg-transparent w-full items-center"
+  x-data="{open:false}"
+>
+  <div>
+    <button>Logo</button>
+  </div>
+  <div class=" ">
+    {% comment %}
+    <form action="" method="get" class="relative text-white">
+      <input
+        type="text"
+        class="w-full bg-transparent border-0 border-b-2 border-fuchsia-300 placeholder:text-white max-md:placeholder:text-[.6rem] placeholder:text-[.7rem]"
+        name="search"
+        placeholder="Search Creators"
+      />
+      <button class="absolute p-2 right-2 top-1 text-grey-400">
+        <i class="fa-solid fa-magnifying-glass" style="font-size: 20px"></i>
+      </button>
+    </form>
+    {% endcomment %}
+  </div>
+
+  <ul class="gap-8 hidden lg:flex items-center">
+    <a href="{%url 'home' %}">Home</a>
+    <a href="{%url 'dashboard'%}">Dashboard</a>
+    <a href="{%url 'addwallet'%}">Connect Wallet</a>
+    <a href="{%url 'withdraw'%}">Request Withdrawal</a>
+    <a href="{%url 'history'%}">History</a>
+    <a href="{%url 'market'%}">Marketplace</a>
+  </ul>
+
+  <button
+    id="dropdownUserAvatarButton"
+    data-dropdown-toggle="dropdownAvatar"
+    class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+    type="button"
+  >
+    <span class="sr-only">Open user menu</span>
+    <img
+      class="w-8 h-8 rounded-full"
+      src="{%static 'images/4.jpg'%}"
+      alt="user photo"
+    />
+  </button>
+
+  <!-- Dropdown menu -->
+  <div
+    id="dropdownAvatar"
+    class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+  >
+    <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
+      <div>Bonnie Green</div>
+      <div class="font-medium truncate">name@flowbite.com</div>
+    </div>
+    <ul
+      class="py-2 text-sm text-gray-700 dark:text-gray-200"
+      aria-labelledby="dropdownUserAvatarButton"
+    >
+      <li>
+        <a
+          href="{%url 'avatar'%}"
+          class="block px-4 py-2 hover:bg-purple-500 dark:hover:bg-gray-600 dark:hover:text-white"
+          >Update Profile</a
+        >
+      </li>
+
+    </ul>
+    <div class="py-2">
+      <a
+        href="{%url 'logout'%}"
+        class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-500 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+        >Sign out</a
+      >
+    </div>
+  </div>
+
+  <div x-on:click="open=!open" class="lg:hidden">
+    <i class="fa-solid fa-bars"></i>
+  </div>
+
+  <div
+    class="fixed w-4/5 top-0 left-0 h-screen opacity-95 lg:w-3/5 bg-black text-white lg:hidden"
+    x-transition.duration.500ms
+    x-show="open"
+  >
+    <ul class="flex-col gap-8 flex items-center">
+      <div class=" ">
+        <form
+          action="{%url 'search'%}"
+          method="get"
+          class="relative text-fuchsia-500"
+        >
+          <input
+            type="text"
+            class="w-full bg-red-200 border-0 rounded-md placeholder:text-black max-md:placeholder:text-[.6rem] placeholder:text-[.7rem]"
+            name="search"
+            placeholder="Search Creators"
+          />
+          <button class="absolute p-2 right-2 top-1 text-grey-400">
+            <i class="fa-solid fa-magnifying-glass" style="font-size: 20px"></i>
+          </button>
+        </form>
+      </div>
+      <a href="{%url 'home' %}">Home</a>
+      <a href="{%url 'dashboard'%}">Dashboard</a>
+      <a href="{%url 'addwallet'%}">Connect Wallet</a>
+      <a href="{%url 'withdraw'%}">Request Withdrawal</a>
+      <a href="{%url 'history'%}">History</a>
+      <a href="{%url 'market'%}">Marketplace</a>
+    </ul>
+  </div>
+</nav>

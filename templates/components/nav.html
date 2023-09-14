@@ -1,0 +1,65 @@
+<nav class='flex justify-between px-5 py-5 z-50 text-white  absolute top-0 bg-transparent  w-full  items-center' x-data="{open:false}">
+    <div class='text-white text-lg'>
+      <p class='text-fuchsia-500'>Nello.</p>
+    </div>
+    <div class='lg:block hidden'>
+            <form action="{%url 'search'%}" method="get" class='relative text-fuchsia-500 '>
+  <input type="text" class=' w-full  bg-red-200 border-0 rounded-md  placeholder:text-black max-md:placeholder:text-[.6rem] placeholder:text-[.7rem] ' name='search' placeholder='Search Creators'>
+  <button class='absolute p-2 right-2 top-1 text-grey-400'>
+    <i class="fa-solid fa-magnifying-glass" style=" font-size:20px;"></i>
+  </button>
+  </form>
+    </div>
+
+    <ul class='lg:flex gap-8 hidden  items-center'>
+
+         <a href="{%url 'home'%}">Home</a>
+  <a href="#us">About Us</a>
+  <a href="#service">Services</a>
+  <a href='{%url "market"%}'>Explore</a>
+  {% if request.user.is_authenticated %}
+
+  {% else %}
+    <a href='{%url "register"%}' class=''>Register</a>
+  {% endif %}
+  {% if request.user.is_authenticated %}
+    <a href="{%url 'dashboard'%}"><button class='bg-purple-500 text-white py-3 px-16 rounded-md'>Dashboard</button></a>
+  {% else %}
+    <a href="{%url 'login'%}"><button class='bg-purple-500 text-white py-3 px-16 rounded-md'>Login</button></a>
+  {% endif %}
+    </ul>
+
+{% comment %} mobile nav toggle {% endcomment %}
+
+<div x-on:click="open=!open" class="lg:hidden">
+  <i class="fa-solid fa-bars"></i>
+</div>
+
+<div class='fixed w-4/5 top-0 left-0 h-screen opacity-95  lg:w-3/5 bg-black text-white lg:hidden' x-transition.duration.500ms x-show="open">
+
+  <ul class=' flex-col gap-8 flex  items-center'>
+            <div class=' '>
+            <form action="{%url 'search'%}" method="get" class='relative text-fuchsia-500 '>
+  <input type="text" class=' w-full  bg-red-200 border-0 rounded-md  placeholder:text-black max-md:placeholder:text-[.6rem] placeholder:text-[.7rem] ' name='search' placeholder='Search Creators'>
+  <button class='absolute p-2 right-2 top-1 text-grey-400'>
+    <i class="fa-solid fa-magnifying-glass" style=" font-size:20px;"></i>
+  </button>
+  </form>
+    </div>
+  <a href="{%url 'home'%}">Home</a>
+  <a href="#us">About Us</a>
+  <a href="#service">Services</a>
+  <a href='{%url "market"%}'>Explore</a>
+  {% if request.user.is_authenticated %}
+
+  {% else %}
+    <a href='{%url "register"%}' class=''>Register</a>
+  {% endif %}
+  {% if request.user.is_authenticated %}
+    <a href="{%url 'dashboard'%}"><button class='bg-purple-500 text-white py-3 px-16 rounded-md'>Dashboard</button></a>
+  {% else %}
+    <a href="{%url 'login'%}"><button class='bg-purple-500 text-white py-3 px-16 rounded-md'>Login</button></a>
+  {% endif %}
+    </ul>
+</div>
+</nav>

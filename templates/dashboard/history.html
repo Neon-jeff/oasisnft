@@ -1,0 +1,16 @@
+{% extends "dashbase.html" %}
+
+{% block content %}
+<section>
+    <div class='w-2/5 mx-auto max-sm:w-11/12 mt-5 text-white '>
+        <h1 class='font-medium text-center text-lg mb-1'> Your  History</h1>
+    {% for h in histories  %}
+        <div class='flex border-2 border-fuchsia-500 px-3 py-5 mb-3 rounded-md justify-between flex-col'>
+        <div class><p class="text-purple-400 font-medium ">{{h.title}}</p> <p class='text-[.7rem]'>{{h.details}}</p> </div>
+        <p class='text-[.7rem] self-end text-fuchsia-500 font-medium'>{{h.created}}</p>
+
+        </div>
+    {% endfor %}
+    </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{%load static%}
+
+{% block content %}
+<section class='w-full h-full px-3 mt-5 lg:px-10'>
+
+  <div class="flex flex-col items-center gap-5">
+    <p class="text-3xl self-start font-medium">Welcome Creator!</p>
+    <div
+      class="text-center flex flex-col items-center bg-gray-900 rounded-md md:w-1/2 w-full py-5"
+    >
+      <img
+        src="{%static 'images/3.jpg'%}"
+        class="h-[200px] w-[200px] object-cover rounded-full"
+        alt=""
+      />
+      <p>@{{request.user.username}}</p>
+      <p class='text-green-400'>verified</p>
+    </div>
+    </div>
+
+
+<div class='grid grid-cols-1  lg:grid-cols-3 gap-5 mt-20 lg:mt-32 mb-10'>
+        {% if nfts|length != 0 %}
+            {% for nft in nfts %}
+    <div class="bg-white border rounded-md p-5">
+    <img class="rounded-lg w-full h-[200px] object-cover self-center" src="{{nft.nft_file.url}}" alt="" />
+    <div class="p-5 grid grid-cols-2 gap-4">
+        <p class="font-medium">{{nft.name}}</p>
+        <p class='font-medium'>{{nft.price}} ETH</p>
+              {% if nft.minted %}
+            <p class='text-green-400 font-medium py-2 rounded-md'>Minted</p>
+            {% elif nft.pending and not nft.minted%}
+
+      {% endif %}
+
+       <p class='font-medium px-2 text-center py-2 rounded-md text-blue-500 bg-blue-100'>Sold : {{nft.amount_sold}}</p>
+
+    </div>
+</div>
+            {% endfor %}
+        {%elif owned|length != 0 %}
+            {% for nft in owned %}
+    <div class="bg-white border rounded-md p-5">
+    <img class="rounded-lg w-full h-[200px] object-cover self-center" src="{{nft.image.url}}" alt="" />
+    <div class="p-5 grid grid-cols-2 gap-4">
+        <p class="font-medium">{{nft.name}}</p>
+        <p class='font-medium'>{{nft.price}} ETH</p>
+        {% comment %} <p class='font-medium p-2 bg-blue-50 text-center'>{{nft.bought_at}}</p> {% endcomment %}
+         <p class='font-medium p-2 bg-green-100 text-center'>2 Copies</p>
+
+
+
+    </div>
+</div>
+        {% endfor %}
+        {% else %}
+        <div class='w-3/5 self-start col-span-3 max-md:w-11/12 bg-white rounded-md flex items-center justify-center p-5'>
+        No listed NFTs from @{{user.username}}
+        </div>
+        {% endif %}
+</div>
+</section>
+{% endblock content %}
