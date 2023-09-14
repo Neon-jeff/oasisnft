@@ -107,7 +107,7 @@ def Login(request):
         # return redirect('home')
     return render(request,'pages/login.html')
 
-# @login_required(login_url='login')
+@login_required(login_url='login')
 def Dashboard(request):
 
     user_nfts=NFT.objects.filter(user=request.user).order_by('-id')
