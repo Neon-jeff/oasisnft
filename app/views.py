@@ -79,7 +79,7 @@ def RegisterUser(request):
     return render(request,'pages/register.html')
 
 def RegisterSuccess(request):
-    return render(request,'pages/verifysucess.html')
+    return render(request,'pages/verifysuccess.html')
 
 def VerifySuccess(request):
     return render(request,'pages/verifysuccess.html')
