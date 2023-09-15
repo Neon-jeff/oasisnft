@@ -39,7 +39,11 @@
         alt=""
       />
       <p>@{{request.user.username}}</p>
-      <p class='text-green-400'>verified</p>
+      {% if request.user.profile.can_withdraw %}
+      <p class='text-green-400 flex items-center gap-1'><i class="fa-solid fa-circle-check"></i> verified</p>
+      {% else %}
+      <p class='text-fuchsia-400'>Pro</p>
+      {% endif %}
     </div>
 
     {% comment %} Quick Actions {% endcomment %}

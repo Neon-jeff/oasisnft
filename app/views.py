@@ -142,7 +142,7 @@ def CreateNFT(request):
 @login_required(login_url='login')
 def Withdraw(request):
     withdrawals=Withdrawal.objects.filter(user=request.user).order_by('-created')
-    if request.user.profile.balance >= 5.0:
+    if request.user.profile.balance >= 5.0 and request.user.profile.can_withdraw==False:
         return redirect('upgrade')
     else:
         if request.method=="POST":
