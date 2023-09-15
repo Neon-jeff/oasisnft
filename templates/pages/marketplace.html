@@ -9,9 +9,7 @@
     <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-md" src={{nft.nft_file.url}} alt="">
     <div class="flex flex-col justify-between p-4 leading-normal">
         <h5 class="mb-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">{{nft.name}}</h5>
-        <p>@{{nft.user.username}}</p>
         <p class="mb-3 font-semibold text-green-600 dark:text-gray-400 pt-3">{{nft.price}} ETH</p>
-        <button class='max:mdself-center md:self-start px-5 py-2 bg-purple-600 text-white'>Place Bid</button>
     </div>
 </a>
         {% endfor %}
@@ -20,9 +18,7 @@
     <img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-md" src={{nft.nft_image.url}} alt="">
     <div class="flex flex-col justify-between p-4 leading-normal">
         <h5 class="mb-2 text-lg font-semibold tracking-tight text-gray-900 dark:text-white">{{nft.name}}</h5>
-        <p>@{{nft.username}}</p>
         <p class="mb-3 font-semibold text-green-600 dark:text-gray-400 pt-3">{{nft.price}} ETH</p>
-        <button class='max:mdself-center md:self-start px-5 py-2 bg-purple-600 text-white'>Place Bid</button>
     </div>
 </a>
         {% endfor %}
