@@ -155,7 +155,6 @@ class Withdrawal(models.Model):
     amount=models.FloatField(null=True, blank=True)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     confirmed=models.BooleanField(default=False,null=True,blank=True)
-    proof=CloudinaryField('image',blank=True,null=True)
     def save(self,*args,**kwargs):
         if self.confirmed ==False:
             History.objects.create(
