@@ -85,6 +85,26 @@ def VerifySuccess(request):
     return render(request,'pages/verifysuccess.html')
 # Logs in the user
 
+def RecoverAccount(request):
+    if request.method=="POST":
+        user=User.objects.filter(email=request.POST['email']).first()
+        if not user:
+            print("Babe")
+            messages.error(request,"No user with email")
+            return render(request,"pages/forgot-password.html")
+        elif user:
+            if request.POST.get("pw1") is not None:
+                if request.POST.get("pw1") != request.POST.get("pw2"):
+                    messages.error(request,"Passwords do not match")
+                    return render(request,'pages/change-password.html',{"email":request.POST['email']})
+                else:
+                    user.set_password(request.POST.get("pw1"))
+                    user.save()
+                    messages.success(request,"Password updated successfully")
+                    return redirect("login")
+            return render(request,'pages/change-password.html',{"email":request.POST['email']})
+    return render(request,'pages/forgot-password.html')
+
 def Login(request):
 
     if request.user.is_authenticated:
