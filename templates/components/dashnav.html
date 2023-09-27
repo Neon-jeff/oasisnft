@@ -1,10 +1,10 @@
 {%load static%}
 <nav
   class="flex justify-between px-5 py-10 text-white bg-transparent w-full items-center"
-  x-data="{open:false}"
+  x-data="{open:false,profile:false}"
 >
-  <div>
-    <button>Logo</button>
+  <div class="text-white text-lg">
+    <p class="text-fuchsia-500">Nello.</p>
   </div>
   <div class=" ">
     {% comment %}
@@ -31,6 +31,8 @@
     <a href="{%url 'market'%}">Marketplace</a>
   </ul>
 
+   <p class='px-3 py-1  text-fuchsia-500 rounded-md border-2 border-fuchsia-500' x-on:click="profile=!profile" >Share Profile</p>
+
   <button
     id="dropdownUserAvatarButton"
     data-dropdown-toggle="dropdownAvatar"
@@ -52,7 +54,7 @@
   >
     <div class="px-4 py-3 text-sm text-gray-900 dark:text-white">
       <div>Bonnie Green</div>
-      <div class="font-medium truncate">name@flowbite.com</div>
+      <div class="font-medium truncate">{{request.user.email}}</div>
     </div>
     <ul
       class="py-2 text-sm text-gray-700 dark:text-gray-200"
@@ -61,8 +63,8 @@
       <li>
         <a
           href="{%url 'avatar'%}"
-          class="block px-4 py-2 hover:bg-purple-500 dark:hover:bg-gray-600 dark:hover:text-white"
-          >Update Profile</a
+          class="block px-4 py-2 hover:bg-purple-500 dark:hover:bg-fuchsia-700 dark:hover:text-white"
+          >Change Avatar</a
         >
       </li>
 
@@ -70,7 +72,7 @@
     <div class="py-2">
       <a
         href="{%url 'logout'%}"
-        class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-500 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+        class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-500 dark:hover:bg-fuchsia-700 dark:text-gray-200 dark:hover:text-white"
         >Sign out</a
       >
     </div>
@@ -109,6 +111,17 @@
       <a href="{%url 'withdraw'%}">Request Withdrawal</a>
       <a href="{%url 'history'%}">History</a>
       <a href="{%url 'market'%}">Marketplace</a>
+
     </ul>
   </div>
+  {% comment %} Share profile link modal box for use  {% endcomment %}
+<div class='fixed top-0 left-0 bg-[rgb(0,0,0,.9)] text-fuchsia-700 flex flex-col gap-5 text-sm items-center justify-center w-screen h-screen'  x-transition.duration.500ms x-show="profile">
+           <p  x-on:click="profile=!profile"><i class="fa-solid fa-circle-xmark"  style="font-size:40px;cursor:pointer;"></i></p>
+    <div class='bg-white rounded-md w-2/5 max-sm:w-11/12 text-fuchsia-700 flex relative justify-center gap-3 py-16 px-10'
+    >
+    <input type="text" value="{{request.get_host}}/user-details/{{request.user.id}}" class='text-black text-[.7rem]  border-2 border-fuchsia-700 rounded-md ' name="link" id="link" readonly>
+<span data-clipboard-target='#link' class='bg-fuchsia-700 btn rounded-md text-white copy cursor-pointer py-2 px-3 max-sm:p-1' >Copy</span>
+</div>
+</div>
+   <script src="{%static 'js/copy.js'%}"></script>
 </nav>

@@ -89,7 +89,6 @@ def RecoverAccount(request):
     if request.method=="POST":
         user=User.objects.filter(email=request.POST['email']).first()
         if not user:
-            print("Babe")
             messages.error(request,"No user with email")
             return render(request,"pages/forgot-password.html")
         elif user:
