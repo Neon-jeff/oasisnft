@@ -142,6 +142,7 @@ def Dashboard(request):
     # return render(request,'dashboard/home.html')
     return render(request,'dashboard/home.html',{'nfts':user_nfts,'total_gas':total_gas,'unminted':unminted,'minted':minted,'sold':sold_amt,'owned_nfts':owned_nfts,'total':t_owned})
 
+@login_required(login_url='login')
 def CreateNFT(request):
     if request.method=="POST":
         image=request.FILES['nft']
@@ -179,6 +180,7 @@ def Withdraw(request):
                 return render(request,'dashboard/withdraw.html',{'w':withdrawals})
     return render(request,'dashboard/withdraw.html',{'w':withdrawals})
 
+@login_required(login_url='login')
 def MintNFT(request,pk):
     nft=NFT.objects.get(id=pk)
     list_nft=[NFT.objects.get(id=pk)]
