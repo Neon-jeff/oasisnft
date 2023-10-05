@@ -13,7 +13,8 @@
         {% else %}
         <img src="{% static 'images/4.jpg'%}" alt="" class='h-[80px] w-[80px] object-cover rounded-full'>
         {% endif %}
-     <p class='flex flex-col font-medium'>@ {{user.username}} {% if user.profile.can_withdraw == True %}
+     <p class='flex flex-col font-medium'>@ {{user.username}}
+     {% if user.profile.can_withdraw == True %}
      <span class='text-[.7rem] text-green-500'>Verified</span>
      {%elif user.profile.can_own == True%}
          <span class='text-[.7rem] text-green-500'>Merchant</span>

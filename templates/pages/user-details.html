@@ -14,8 +14,14 @@
         class="h-[200px] w-[200px] object-cover rounded-full"
         alt=""
       />
-      <p>@{{request.user.username}}</p>
-      <p class='text-green-400'>verified</p>
+      <p class='text-fuchsia-500'>@{{request.user.username}}</p>
+      {% if user.profile.can_withdraw == True %}
+     <span class='text-[.7rem] text-green-500'>Verified</span>
+     {%elif user.profile.can_own == True%}
+         <span class='text-[.7rem] text-green-500'>Merchant</span>
+     {% else %}
+     <span class='text-[.7rem] text-blue-500'>Pro</span>
+     {% endif %}</p>
     </div>
     </div>
 
