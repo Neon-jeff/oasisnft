@@ -32,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY =env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -131,6 +131,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+# EMAIL CONFIGS VARIABLES
+
+EMAIL_USER=env("EUSER")
+EMAIL_AUTH=env("EPASS")
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/

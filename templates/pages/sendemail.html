@@ -1,0 +1,45 @@
+{% extends "dashbase.html" %} {%load static%} {% block content %}
+
+<section class="text-white px-10 mx-auto max-sm:px-5 max-sm:w-4/5 flex justify-center gap-10 max-sm:flex-col">
+  <div class="p-10 max-sm:p-5 border-fuchsia-800 border-2 rounded-md bg-gray-950">
+    <h1 class="text-xl text-fuchsia-600">Single Email</h1>
+    <form action="" method="post" class="pt-5 flex flex-col gap-3 items-center">
+    {% csrf_token %}
+      <fieldset>
+        <label for="user" class="block">Select User</label>
+        <select name="email" id="" class="bg-fuchsia-200 max-sm:text-[.7rem]  max-sm:w-11/12 font-medium text-black rounded-md">
+          {% for email in emails %}
+          <option value="{{email}}" class="font-medium">{{email}}</option>
+          {% endfor %}
+        </select>
+      </fieldset>
+      <fieldset class='w-full'>
+        <label for="type" class="block">Choose Email type</label>
+        <select name="email-type" id="" class="bg-fuchsia-200 max-sm:text-[.7rem]  w-full font-medium text-black rounded-md">
+          <option value="null">Select Email Type</option>
+          <option value="promotional">Promotional</option>
+          <option value="welcome">Welcome</option>
+        </select>
+      </fieldset>
+      <button class="rounded-md bg-fuchsia-800 p-3">Send Email</button>
+    </form>
+  </div>
+
+  <div class="p-10 border-fuchsia-800 border-2 rounded-md bg-gray-950">
+    <h1 class="text-xl text-fuchsia-600">Bulk Email</h1>
+    <form action="{%url 'bulk'%}" method="post" class="pt-5 flex flex-col gap-3">
+    {% csrf_token %}
+
+      <fieldset>
+        <label for="type" class="block">Choose Email type</label>
+        <select name="email-type" id="" class="bg-fuchsia-200 font-medium text-black rounded-md">
+          <option value="null">Select Email Type</option>
+          <option value="welcome">Welcome</option>
+        </select>
+      </fieldset>
+      <button class="rounded-md bg-fuchsia-800 p-3">Send Email</button>
+    </form>
+  </div>
+</section>
+
+{% endblock content %}

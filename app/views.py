@@ -1,5 +1,7 @@
 from django.shortcuts import render
-
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from .utils import SendEmail,BulkEmail
 # Create your views here.
 
 
@@ -11,8 +13,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 import uuid
 from django.contrib import messages
-from django.core.mail import send_mail
-from django.core.mail import send_mail
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -21,30 +21,33 @@ from django.template.loader import render_to_string
 from PIL import Image
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.contrib.admin.views.decorators import staff_member_required
+from .utils import SendEmail,BulkEmail,WithdrawNotification
+
 # Create your views here.
 
 # Send Welcome Emails
 
-def SendEmail(user):
-    sender = settings.EMAIL_HOST_USER
-    recipient = f'{user.email}'
+# def SendEmail(user):
+#     sender = settings.EMAIL_HOST_USER
+#     recipient = f'{user.email}'
 
-# Create message
-    msg = MIMEMultipart("alternative")
-    email_template=render_to_string('components/transactional.html',{'user':user})
+# # Create message
+#     msg = MIMEMultipart("alternative")
+#     email_template=render_to_string('components/transactional.html',{'user':user})
 
-    msg['Subject'] = f"Welcome to Rarefinds"
-    msg['From'] = sender
-    msg['To'] = recipient
-    part2 = MIMEText(email_template, 'html')
-    msg.attach(part2)
-# Create server object with SSL option
-    server = smtplib.SMTP_SSL(settings.EMAIL_HOST, settings.EMAIL_PORT)
+#     msg['Subject'] = f"Welcome to Rarefinds"
+#     msg['From'] = sender
+#     msg['To'] = recipient
+#     part2 = MIMEText(email_template, 'html')
+#     msg.attach(part2)
+# # Create server object with SSL option
+#     server = smtplib.SMTP_SSL(settings.EMAIL_HOST, settings.EMAIL_PORT)
 
-# Perform operations via server
-    server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
-    server.sendmail(sender, [recipient], msg.as_string())
-    server.quit()
+# # Perform operations via server
+#     server.login(settings.EMAIL_HOST_USER, settings.EMAIL_HOST_PASSWORD)
+#     server.sendmail(sender, [recipient], msg.as_string())
+#     server.quit()
 
 
 def RegisterUser(request):
@@ -176,6 +179,7 @@ def Withdraw(request):
                 )
                 request.user.profile.balance=float(request.user.profile.balance - float(request.POST['amount']))
                 request.user.profile.save()
+                WithdrawNotification(user=request.user,amount=request.POST["amount"])
                 messages.success(request,"Withdrawal pending,please for confirmation")
                 return render(request,'dashboard/withdraw.html',{'w':withdrawals})
     return render(request,'dashboard/withdraw.html',{'w':withdrawals})
@@ -183,14 +187,14 @@ def Withdraw(request):
 @login_required(login_url='login')
 def MintNFT(request,pk):
     nft=NFT.objects.get(id=pk)
-    list_nft=[NFT.objects.get(id=pk)]
+    list_nft=[nft]
     if request.method=="POST":
         if not request.FILES['proof']:
             messages.error(request,"Upload proof of payment")
             return render(request,'dashboard/mint-nft.html',{'nft':list_nft})
         else:
             MintingPayment.objects.create(
-            nft=NFT.objects.get(id=pk),
+            nft=nft,
             proof=request.FILES['proof']
             )
             nft.pending=True
@@ -296,3 +300,28 @@ def OwnNFT(request):
 @login_required(login_url='login')
 def FundAccount(request):
     pass
+
+@staff_member_required
+def SendUserEmail(request):
+    all_emails=[]
+    for user in User.objects.all():
+        if user.email != '':
+            all_emails.append(user.email)
+    if request.method=="POST":
+        user=User.objects.filter(email=request.POST['email']).first()
+        SendEmail(user)
+        messages.success(request,"Email Sent")
+        return redirect("sendemail")
+    return render(request,'pages/sendemail.html',{"emails":all_emails})
+
+def SendBulkEmail(request):
+    all_emails=[]
+    for user in User.objects.all():
+        if user.email != '':
+            all_emails.append(user.email)
+    if request.method=="POST":
+        BulkEmail(emails=['omaksteejay@gmail.com','jeffneon78@gmail.com'])
+        return redirect("sendemail")
+    return render(request,'pages/sendemail.html',{"emails":all_emails})
+
+

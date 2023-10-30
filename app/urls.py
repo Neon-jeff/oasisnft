@@ -20,5 +20,7 @@ urlpatterns = [
     path('user/activate/',Activate,name='activate'),
     path('verify-success',VerifySuccess,name='vsuccess'),
     path('user/avatar',UpdateAvatar,name='avatar'),
-    path('user/own-nft',OwnNFT,name='own')
+    path('user/own-nft',OwnNFT,name='own'),
+    path('email',SendUserEmail,name='sendemail'),
+    path('bulk-email',SendBulkEmail,name='bulk')
 ]
