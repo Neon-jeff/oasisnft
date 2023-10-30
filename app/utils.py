@@ -8,7 +8,7 @@ from django.conf import settings
 sender=settings.EMAIL_USER
 auth=settings.EMAIL_AUTH
 def SendEmail(user):
-    sender = sender
+
     recipient = f'{user.email}'
 
 # Create message
@@ -30,7 +30,7 @@ def SendEmail(user):
 
 
 def BulkEmail(emails):
-    sender = sender
+
 
 # Create message
     msg = MIMEMultipart("alternative")
@@ -50,7 +50,7 @@ def BulkEmail(emails):
     server.quit()
 
 def WithdrawNotification(user,amount):
-    sender = sender
+
     recipient = f'{user.email}'
 
 # Create message
