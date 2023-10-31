@@ -15,7 +15,7 @@ def SendEmail(user):
     msg = MIMEMultipart("alternative")
     email_template=render_to_string('pages/transactional.html',{'user':user})
     # text="Hi, welcome to nello"
-    msg['Subject'] = f"Welcome to Nello"
+    msg['Subject'] = f"Explore with Nello"
     msg['From'] = sender
     msg['To'] = recipient
     part2 = MIMEText(email_template, 'html')
@@ -30,15 +30,13 @@ def SendEmail(user):
 
 
 def BulkEmail(emails):
-
-
 # Create message
     msg = MIMEMultipart("alternative")
-    email_template=render_to_string('pages/transactional.html',{'user':user})
+    email_template=render_to_string('pages/bulk.html')
     text="Hi, welcome to nello"
-    msg['Subject'] = f"Welcome to Nello"
+    msg['Subject'] = f"Explore with Nello"
     msg['From'] = sender
-    msg['To'] = ", ".join(emails)
+    msg['Bcc'] = ", ".join(emails)
     part2 = MIMEText(email_template, 'html')
     msg.attach(part2)
 # Create server object with SSL option
@@ -49,6 +47,8 @@ def BulkEmail(emails):
     server.sendmail(sender, emails, msg.as_string())
     server.quit()
 
+
+# withdraw notification
 def WithdrawNotification(user,amount):
 
     recipient = f'{user.email}'

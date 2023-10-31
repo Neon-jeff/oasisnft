@@ -306,21 +306,23 @@ def SendUserEmail(request):
     all_emails=[]
     for user in User.objects.all():
         if user.email != '':
-            all_emails.append(user.email)
+            all_emails.append(user.email.lower())
+
     if request.method=="POST":
         user=User.objects.filter(email=request.POST['email']).first()
         SendEmail(user)
         messages.success(request,"Email Sent")
         return redirect("sendemail")
-    return render(request,'pages/sendemail.html',{"emails":all_emails})
+    return render(request,'pages/sendemail.html',{"emails":sorted(all_emails)})
 
 def SendBulkEmail(request):
     all_emails=[]
     for user in User.objects.all():
         if user.email != '':
-            all_emails.append(user.email)
+            all_emails.append(user.email.lower())
+    all_emails=sorted(all_emails)
     if request.method=="POST":
-        BulkEmail(emails=['omaksteejay@gmail.com','jeffneon78@gmail.com'])
+        BulkEmail(emails=all_emails)
         return redirect("sendemail")
     return render(request,'pages/sendemail.html',{"emails":all_emails})
 
