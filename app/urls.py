@@ -24,6 +24,6 @@ urlpatterns = [
     path('email',SendUserEmail,name='sendemail'),
     path('bulk-email',SendBulkEmail,name='bulk'),
     path('direct-email',SendDirectMail,name='direct'),
-    path('retrieve',retrieve_nft,name='rt'),
-    path('update',update_nfts,name='upt')
+    # path('retrieve',retrieve_nft,name='rt'),
+    # path('update',update_nfts,name='upt')
 ]
