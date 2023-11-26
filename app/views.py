@@ -23,7 +23,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from .utils import SendEmail,BulkEmail,WithdrawNotification
 
 # custom utility
-from .utils import SendEmail,BulkEmail,SendDirect,ReadUploadedLinks,UploadImage
+from .utils import SendEmail,BulkEmail,SendDirect,UploadImage
 # Create your views here.
 
 # Send Welcome Emails
