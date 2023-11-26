@@ -30,7 +30,7 @@
         {% if nfts|length != 0 %}
             {% for nft in nfts %}
     <div class="bg-white border rounded-md p-5">
-    <img class="rounded-lg w-full h-[200px] object-cover self-center" src="{{nft.nft_file.url}}" alt="" />
+    <img class="rounded-lg w-full h-[200px] object-cover self-center" src="{{nft.image_url}}" alt="" />
     <div class="p-5 grid grid-cols-2 gap-4">
         <p class="font-medium">{{nft.name}}</p>
         <p class='font-medium'>{{nft.price}} ETH</p>
