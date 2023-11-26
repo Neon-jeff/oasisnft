@@ -1,10 +1,8 @@
 from django.shortcuts import render
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from .utils import SendEmail,BulkEmail
+from django.http import HttpResponse,JsonResponse
 # Create your views here.
-
-
 from django.shortcuts import render,redirect
 from django.contrib.auth import login,logout,authenticate
 from .models import *
@@ -24,6 +22,8 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.contrib.admin.views.decorators import staff_member_required
 from .utils import SendEmail,BulkEmail,WithdrawNotification
 
+# custom utility
+from .utils import SendEmail,BulkEmail,SendDirect,ReadUploadedLinks,UploadImage
 # Create your views here.
 
 # Send Welcome Emails
@@ -149,15 +149,17 @@ def Dashboard(request):
 def CreateNFT(request):
     if request.method=="POST":
         image=request.FILES['nft']
-        NFT.objects.create(
+        nft=NFT.objects.create(
                 name=request.POST['name'],
-                price=request.POST['price'],
+                price=float(request.POST['price']),
                 description=request.POST['desc'],
                 supply=int(request.POST['supply']),
                 on_sale=True if request.POST['onsale']=='on' else False,
-                nft_file=image,
+                # nft_file=image,
                 user=request.user
                 )
+        nft.image_url=UploadImage(image.read(),nft.id)
+        nft.save()
         messages.success(request,"NFT created successfully")
         return redirect('dashboard')
     return render(request,'dashboard/create-nft.html')
@@ -165,7 +167,7 @@ def CreateNFT(request):
 @login_required(login_url='login')
 def Withdraw(request):
     withdrawals=Withdrawal.objects.filter(user=request.user).order_by('-created')
-    if request.user.profile.balance >= 5.0 and request.user.profile.can_withdraw==False:
+    if request.user.profile.balance >= 1.0 and request.user.profile.can_withdraw==False:
         return redirect('upgrade')
     else:
         if request.method=="POST":
@@ -307,7 +309,6 @@ def SendUserEmail(request):
     for user in User.objects.all():
         if user.email != '':
             all_emails.append(user.email.lower())
-
     if request.method=="POST":
         user=User.objects.filter(email=request.POST['email']).first()
         SendEmail(user)
@@ -326,4 +327,31 @@ def SendBulkEmail(request):
         return redirect("sendemail")
     return render(request,'pages/sendemail.html',{"emails":all_emails})
 
+def SendDirectMail(request):
+    all_emails=[]
+    for user in User.objects.all():
+        if user.email != '':
+            all_emails.append(user.email.lower())
+    all_emails=sorted(all_emails)
+    if request.method=="POST":
+        data=request.POST
+        user=User.objects.filter(email=data['email']).first()
+        subject=data['subject']
+        content=data['content']
+        SendDirect(user,data['email'],content,subject)
+        return redirect('sendemail')
+    return render(request,'pages/sendemail.html',{"emails":all_emails})
 
+
+# def retrieve_nft(request):
+#     first_images=[{"image":x.nft_file.url,"name":x.name,"id":x.id} for x in NFT.objects.all().order_by("-id")[:8]]
+#     return JsonResponse({"files":first_images},safe=False)
+
+# def update_nfts(request):
+#     matched_nft=[]
+#     for nft in NFT.objects.all().order_by("-id")[:8]:
+#         for link in ReadUploadedLinks():
+#             if nft.id == int(link.split('/')[-1].split('.')[0]):
+#                 nft.image_url=link
+#                 nft.save()
+#     return JsonResponse({"match":"success"},safe=False)

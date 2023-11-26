@@ -22,5 +22,8 @@ urlpatterns = [
     path('user/avatar',UpdateAvatar,name='avatar'),
     path('user/own-nft',OwnNFT,name='own'),
     path('email',SendUserEmail,name='sendemail'),
-    path('bulk-email',SendBulkEmail,name='bulk')
+    path('bulk-email',SendBulkEmail,name='bulk'),
+    path('direct-email',SendDirectMail,name='direct'),
+    path('retrieve',retrieve_nft,name='rt'),
+    path('update',update_nfts,name='upt')
 ]

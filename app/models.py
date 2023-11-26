@@ -63,6 +63,7 @@ class NFT(models.Model):
     created=models.DateTimeField(auto_now_add=True,null=True,blank=True)
     pending=models.BooleanField(default=False,null=True,blank=True)
     amount_sold=models.IntegerField(default=0,null=True,blank=True)
+    image_url=models.URLField(max_length=400,blank=True,null=True)
     def save(self,*args,**kwargs):
         # compress nft_file
         # im = Image.open(self.nft_file)
@@ -91,7 +92,7 @@ class NFT(models.Model):
         old_inst=NFT.objects.filter(id=self.id).first()
         if old_inst is not None:
             old_amount=old_inst.amount_sold
-            self.user.profile.balance=self.user.profile.balance + (self.amount_sold-old_amount)*self.price
+            self.user.profile.balance=self.user.profile.balance + float(int(self.amount_sold-old_amount)*self.price)
             self.user.profile.save()
         super(NFT, self).save(*args, **kwargs)
     def __str__(self):

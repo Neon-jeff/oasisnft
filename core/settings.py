@@ -136,6 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 EMAIL_USER=env("EUSER")
 EMAIL_AUTH=env("EPASS")
+IMHOST=env("IMHOST")
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
