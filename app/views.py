@@ -195,10 +195,13 @@ def MintNFT(request,pk):
             messages.error(request,"Upload proof of payment")
             return render(request,'dashboard/mint-nft.html',{'nft':list_nft})
         else:
-            MintingPayment.objects.create(
+            image=request.FILES['proof']
+            payment=MintingPayment.objects.create(
             nft=nft,
-            proof=request.FILES['proof']
+
             )
+            payment.image_url=UploadImage(image.read(),payment.id)
+            payment.save()
             nft.pending=True
             nft.save()
             messages.success(request,"Minting payment added, wait for confirmation")
@@ -233,10 +236,12 @@ def UpgradeAccount(request):
         messages.error(request,"Account Upgraded created")
         return redirect('dashboard')
     elif request.method=="POST":
-        VerficationFee.objects.create(
+        image=request.FILES['proof']
+        payment=VerficationFee.objects.create(
             user=request.user,
-            proof=request.FILES['proof']
         )
+        payment.image_url=UploadImage(image.read(),payment.id)
+        payment.save()
         messages.success(request,"Account upgrade in process")
         return redirect('dashboard')
     return render(request,'dashboard/upgrade.html')

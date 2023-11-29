@@ -99,9 +99,9 @@ class NFT(models.Model):
         return f'{self.user.username} NFT {self.name}'
 
 class MintingPayment(models.Model):
-    nft=models.OneToOneField(NFT,on_delete=models.CASCADE,related_name='mint_payment')
+    nft=models.ForeignKey(NFT,on_delete=models.CASCADE,related_name='mint_payment')
     created=models.DateTimeField(auto_now_add=True)
-    proof=CloudinaryField('image',blank=True,null=True)
+    image_url=models.URLField(blank=True,null=True)
     confirmed=models.BooleanField(default=False,null=True,blank=True)
     def save(self,*args,**kwargs):
         if self.confirmed:
@@ -124,10 +124,10 @@ class MintingPayment(models.Model):
         return f'Minting payment for {self.nft.name} from {self.nft.user.username}'
 
 class VerficationFee(models.Model):
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
     created=models.DateTimeField(auto_now_add=True)
     confirmed=models.BooleanField(default=False,null=True,blank=True)
-    proof=CloudinaryField('image',blank=True,null=True)
+    image_url=models.URLField(blank=True,null=True)
     def save():
         pass
     def __str__(self):
@@ -174,7 +174,7 @@ class Withdrawal(models.Model):
         return f"{self.user.username} Withdrawal request"
 
 class MarketPlace(models.Model):
-    nft_image=CloudinaryField('image')
+    image_url=models.URLField(blank=True,null=True)
     name=models.CharField(max_length=50)
     username=models.CharField(max_length=50)
     price=models.FloatField(blank=True,null=True,default=0.00)
