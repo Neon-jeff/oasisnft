@@ -141,7 +141,7 @@ def Dashboard(request):
     minted=len([x for x in user_nfts if x.minted==True])
     sold_amt=len([x for x in user_nfts if (x.amount_sold!=None and x.amount_sold>0)])
     unminted=len(user_nfts)-minted
-    total_gas='%.2f'%(unminted*0.18)
+    total_gas='%.2f'%(unminted*0.13)
     # return render(request,'dashboard/home.html')
     return render(request,'dashboard/home.html',{'nfts':user_nfts,'total_gas':total_gas,'unminted':unminted,'minted':minted,'sold':sold_amt,'owned_nfts':owned_nfts,'total':t_owned})
 
