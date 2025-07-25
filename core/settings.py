@@ -17,6 +17,7 @@ import environ
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import dj_database_url
 
 env=environ.Env()
 environ.Env().read_env()
